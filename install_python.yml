@@ -1,0 +1,6 @@
+- name: Install python so other Ansible playbooks can run
+  hosts: all
+  gather_facts: no
+  sudo: yes
+  tasks:
+    - raw: apt-get install -y python

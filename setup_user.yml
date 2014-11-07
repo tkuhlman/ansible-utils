@@ -1,0 +1,16 @@
+- name: Setup up my user, ssh key, sudo access and some basic shell settings
+  hosts: all
+  sudo: yes
+  vars:
+    username: kuhlmant
+  tasks:
+    - name: Create my user
+      user: name={{username}} shell=/bin/bash
+    - name: Add in sudo access
+      copy: 'dest=/etc/sudoers.d/{{username}} owner=root group=root mode=440 content="{{username}} ALL=(ALL) NOPASSWD: ALL"'
+    - name: Add in ssh key
+      authorized_key: user={{username}} key="{{ lookup('file', '/Users/kuhlmant/.ssh/id_rsa.pub') }}"
+      register: result
+    - debug: var=result
+    - name: Set vi mode in the shell
+      lineinfile: dest=~{{username}}/.bashrc line='set -o vi'
