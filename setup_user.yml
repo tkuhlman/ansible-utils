@@ -10,5 +10,7 @@
       copy: 'dest=/etc/sudoers.d/{{username}} owner=root group=root mode=440 content="{{username}} ALL=(ALL) NOPASSWD: ALL"'
     - name: Add in ssh key
       authorized_key: user={{username}} key="{{ lookup('file', '/Users/kuhlmant/.ssh/id_rsa.pub') }}"
-    - name: Set vi mode in the shell
+    - name: Set vi mode in the user shell
       lineinfile: dest=~{{username}}/.bashrc line='set -o vi'
+    - name: Set vi mode in the root shell
+      lineinfile: dest=/root/.bashrc line='set -o vi'
