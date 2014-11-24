@@ -2,8 +2,6 @@
 - name: Copy CA cert 
   copy: src={{cacert_src}} dest=/usr/local/share/ca-certificates/{{cacert_name}}
   register: copy
-- name: Link cert to /etc/ssl/certs
-  file: path=/etc/ssl/certs/{{cacert_name}} state=link src=/usr/local/share/ca-certificates/{{cacert_name}}
 - name: Run update-ca-certificates
   command: update-ca-certificates
   when: copy | changed
