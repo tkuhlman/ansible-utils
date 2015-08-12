@@ -1,0 +1,13 @@
+---
+- name: Enable and start the serial console on systemd based boxes
+  hosts: all
+  gather_facts: no
+  sudo: yes
+  vars:
+    serial_tty: ttyS1
+  tasks:
+    - name: Enable and start serial console
+      command: "systemctl {{item}} serial-getty@{{serial_tty}}.service"
+      with_items:
+        - enable
+        - start
